@@ -1,20 +1,41 @@
 import Box from "@mui/material/Box";
-import TableModel from "../../common/table-model";
+import CommonTable from "../../common/Table";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/Store";
+import LoadingAndErrorWrapper from "../../common/LoadingAndErrorWrapper";
 
 export default function PendingDeliveryModel() {
-  const items = [
-    { id: 1, text: "IPD-020", count: 191 },
-    { id: 2, text: "IPD-020M", count: 215 },
-    { id: 3, text: "KDF-4721", count: 2 },
-    { id: 4, text: "KDF-8721", count: 3 },
-    { id: 5, text: "RDS-0685i", count: 7 },
-    { id: 6, text: "RDS-1325i", count: 16 },
-    { id: 7, text: "SCF3-1206A", count: 18 },
-  ];
 
+  const { workStatusData, isLoadingWorkStatus, workStatusError } = useSelector(
+    (state: RootState) => state.main
+  );
+
+  const modelCount = workStatusData.reduce((acc: { [key: string]: number }, item) => {
+    const model = item.modelCode;
+    if (model) {
+      acc[model] = (acc[model] || 0) + 1;
+    }
+    return acc;
+  }, {} as { [key: string]: number });
+  
+  const modelData = Object.keys(modelCount).map((model, index) => ({
+    id: index,
+    text: model,
+    count: modelCount[model],
+  }));
+    
   return (
-    <Box>
-      <TableModel data={items} mode={"model"} textHeader = "รุ่น"/>
-    </Box>
+    <LoadingAndErrorWrapper
+      isLoading={isLoadingWorkStatus}
+      error={workStatusError}
+    >
+      <Box>
+        <CommonTable
+          data={modelData}
+          mode="model"
+          textHeader="รุ่น"
+        />
+      </Box>
+    </LoadingAndErrorWrapper>
   );
 }

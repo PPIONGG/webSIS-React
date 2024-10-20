@@ -1,15 +1,11 @@
-import { Box } from '@mui/material';
-import React from 'react'
-import TableModel from '../../common/table-model';
+import { Box } from "@mui/material";
+import TableModel from "../../common/Table";
+import { items } from "../../mockData/MockData";
 
 export default function MonthlyPendingDeliveryModel() {
-    const items = [
-        { id: 1, text: "RDS-0685i", count: 5 },
-      ];
-    
-      return (
-        <Box>
-          <TableModel data={items} mode={"model"} textHeader = "รุ่น"/>
-        </Box>
-      );
-    }
+  return (
+    <Box>
+      <TableModel data={items} mode="model" textHeader="รุ่น" />
+    </Box>
+  );
+}

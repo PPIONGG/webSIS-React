@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import PendingDeliveryModel from "./pages/pending-delivery/Model";
 import PendingDeliveryMonth from "./pages/pending-delivery/Month";
 import PendingDeliveryFinalDetails from "./pages/pending-delivery/FinalDetail";
@@ -7,7 +7,6 @@ import MonthlyPendingDeliveryMonth from "./pages/monthly-pending-delivery/Month"
 import MonthlyPendingDeliveryAddress from "./pages/monthly-pending-delivery/Address";
 import MonthlyPendingDeliveryDay from "./pages/monthly-pending-delivery/Day";
 import MonthlyPendingDeliveryFinalDetail from "./pages/monthly-pending-delivery/FinalDetail";
-import LayoutDelivery from "./components/delivery/layout";
 import PendingProductionMonth from "./pages/pending-production/Month";
 import PendingProductionModel from "./pages/pending-production/Model";
 import PendingProductionFinalDetails from "./pages/pending-production/FinalDetail";
@@ -15,8 +14,14 @@ import ProductionInProgressMonth from "./pages/production-in-progress/Month";
 import ProductionInProgressProduction from "./pages/production-in-progress/Production";
 import CancelledJobOrders from "./pages/cancelled-job-orders";
 import DeliverySchedule from "./pages/delivery-schedule";
+import LayoutDelivery from "./layouts/main";
+import { usePageTitle } from "./hooks/usePageTitle";
+
 
 function App() {
+  usePageTitle()
+
+  
   return (
     <Routes>
       <Route path="/" element={<LayoutDelivery />}>
@@ -29,7 +34,7 @@ function App() {
         <Route
           path="pending-delivery/model/:model/month/:month"
           element={<PendingDeliveryFinalDetails />}
-        />
+       />
         {/* ค้างส่งตามเดือน */}
         <Route
           path="monthly-pending-delivery"
@@ -74,6 +79,7 @@ function App() {
         <Route path="cancelled-job-orders" element={<CancelledJobOrders />} />
         {/* ตารางจัดส่งตู้ */}
         <Route path="delivery-schedule" element={<DeliverySchedule />} />
+        <Route path="*" element={<Navigate to="pending-delivery" replace />} />
       </Route>
     </Routes>
   );

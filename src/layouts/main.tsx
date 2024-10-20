@@ -16,8 +16,8 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import MenuIcon from "@mui/icons-material/Menu";
-import { navigation } from "../../common/navigation";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { navigation } from "../common/navigation";
 const drawerWidth = 300;
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -86,7 +86,7 @@ export default function LayoutDelivery() {
           >
             SIS
           </Box>
-           <ChevronRightIcon />
+          <ChevronRightIcon />
           <Box sx={{ fontSize: "20px", fontWeight: "bold" }}>
             {currentNavItem ? currentNavItem.text : "หน้าแรก"}
           </Box>
@@ -103,6 +103,7 @@ export default function LayoutDelivery() {
           }}
           variant="temporary"
           anchor="left"
+          onClose={handleDrawerClose}
           open={open}
         >
           <DrawerHeader>
@@ -126,7 +127,7 @@ export default function LayoutDelivery() {
             </IconButton>
           </DrawerHeader>
           <Divider />
-          <List>
+          <List sx={{ paddingLeft: "8px", paddingRight: "8px" }}>
             {navigation.map((item, index) => (
               <ListItem
                 key={item.text}
@@ -134,7 +135,9 @@ export default function LayoutDelivery() {
                 sx={{
                   backgroundColor: location.pathname.startsWith(item.path)
                     ? "#FFFAE9"
-                    : "transparent", // เปลี่ยนสีเมื่อ active
+                    : "transparent",
+                  borderRadius: "8px",
+
                   "&:hover": {
                     backgroundColor: location.pathname.startsWith(item.path)
                       ? "#FFECB6"
@@ -146,6 +149,9 @@ export default function LayoutDelivery() {
                   component={Link}
                   to={item.path}
                   onClick={handleDrawerClose}
+                  sx={{
+                    borderRadius: "8px",
+                  }}
                 >
                   <ListItemIcon
                     sx={{

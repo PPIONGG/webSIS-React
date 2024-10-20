@@ -1,2 +1,4 @@
 npm i react-router-dom
-ืnpm 
+npm install redux react-redux @reduxjs/toolkit
+npm install axios
+

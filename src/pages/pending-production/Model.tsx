@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import TableModel from "../../common/table-model";
+import TableModel from "../../common/Table";
 
 export default function PendingProductionModel() {
   const items = [
