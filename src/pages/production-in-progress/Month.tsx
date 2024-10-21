@@ -1,15 +1,27 @@
 import Box from "@mui/material/Box";
-import TableModel from "../../common/Table";
-
-const items = [
-  { id: 1, text: "04", count: 5 },
-  { id: 2, text: "05", count: 2 },
-];
+import LoadingAndErrorWrapper from "../../common/LoadingAndErrorWrapper";
+import CommonTable from "../../common/Table";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/Store";
+import { getMonthCount } from "../../utils/dataProcessingUtils";
 
 export default function ProductionInProgressMonth() {
+  const { workStatusData, isLoadingWorkStatus, workStatusError } = useSelector(
+    (state: RootState) => state.main
+  );
+  const monthData = getMonthCount(workStatusData);
   return (
+    <LoadingAndErrorWrapper
+    isLoading={isLoadingWorkStatus}
+    error={workStatusError}
+  >
     <Box>
-      <TableModel data={items} mode="month" textHeader="งานค้างส่งตามเดือน" />
+      <CommonTable
+        data={monthData}
+        mode="month"
+        textHeader="งานค้างส่งตามเดือน"
+      />
     </Box>
+  </LoadingAndErrorWrapper>
   );
 }

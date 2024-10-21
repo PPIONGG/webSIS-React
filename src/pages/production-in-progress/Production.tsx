@@ -1,15 +1,33 @@
 import Box from "@mui/material/Box";
-import TableModel from "../../common/Table";
-
-const items = [
-  { id: 1, text: "04", count: 5 },
-  { id: 2, text: "05", count: 2 },
-];
+import LoadingAndErrorWrapper from "../../common/LoadingAndErrorWrapper";
+import CommonTable from "../../common/Table";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/Store";
+import { useDeliveryParams } from "../../hooks/useDeliveryParams";
+import { filterByMonth } from "../../utils/filterDataByParams";
+import { getProductionCount } from "../../utils/dataProcessingUtils";
 
 export default function ProductionInProgressProduction() {
+  const { month } = useDeliveryParams();
+  const { workStatusData, isLoadingWorkStatus, workStatusError } = useSelector(
+    (state: RootState) => state.main
+  );
+  let filteredData = filterByMonth(workStatusData, month);
+  const productionData = getProductionCount(filteredData);
+
   return (
-    <Box>
-      <TableModel data={items} mode="production" textHeader="Production"  disable={true}  />
-    </Box>
+    <LoadingAndErrorWrapper
+      isLoading={isLoadingWorkStatus}
+      error={workStatusError}
+    >
+      <Box>
+        <CommonTable
+          data={productionData}
+          mode="production"
+          textHeader="Production"
+          disable={true}
+        />
+      </Box>
+    </LoadingAndErrorWrapper>
   );
 }

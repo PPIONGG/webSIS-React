@@ -11,3 +11,7 @@ export interface CommonCollapsibleTableProps {
   data: ResWorkStatus[];
   controls: { label: string; field: string }[];
 }
+
+export interface CommonCollapsibleTableCancelledJobOrderProps {
+  data: ResWorkStatus[];
+}

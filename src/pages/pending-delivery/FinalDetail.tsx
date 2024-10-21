@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/Store";
 import LoadingAndErrorWrapper from "../../common/LoadingAndErrorWrapper";
 import { tablePendingDeliveryControls } from "../../config";
+import { filterByModel, filterByMonth } from "../../utils/filterDataByParams";
 
 export default function PendingDeliveryFinalDetails() {
   const { model, month } = useDeliveryParams();
@@ -12,19 +13,19 @@ export default function PendingDeliveryFinalDetails() {
     (state: RootState) => state.main
   );
 
-  const filteredData = workStatusData.filter(item => {
-    const modelMatch = model === "All" || item.modelCode === model;
-    const monthMatch = month === "All" || item.deliveryMonth === Number(month);
-    return modelMatch && monthMatch;
-  });
-  
+  let filteredData = filterByModel(workStatusData, model);
+  filteredData = filterByMonth(filteredData, month);
+
   return (
     <LoadingAndErrorWrapper
       isLoading={isLoadingWorkStatus}
       error={workStatusError}
     >
       <Box>
-        <CommonCollapsibleTable data={filteredData} controls={tablePendingDeliveryControls} />
+        <CommonCollapsibleTable
+          data={filteredData}
+          controls={tablePendingDeliveryControls}
+        />
       </Box>
     </LoadingAndErrorWrapper>
   );

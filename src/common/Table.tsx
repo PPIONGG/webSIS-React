@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./Table.module.scss";
 import { CommonTableProps } from "../types/Common";
+import { encodeBase64 } from "../utils/base64Utils";
 
 export default function CommonTable({
   data,
@@ -35,23 +36,21 @@ export default function CommonTable({
           <Box key={item.id}>
             <Box className={styles.boxContainer}>
               {disable ? (
-                <Box
-                >
-                  {item.text}
-                </Box>
+                <Box className={styles.textEllipsis}>{item.text}</Box>
               ) : (
                 <Box
                   component={Link}
-                  to={`${location.pathname}/${mode}/${item.text}`}
-                  className={styles.linkItemBox}
+                  to={
+                    mode === "address"
+                      ? `${location.pathname}/${mode}/${encodeBase64(item.text)}`
+                      : `${location.pathname}/${mode}/${item.text}`
+                  }
+                  className={`${styles.linkItemBox} ${styles.textEllipsis}`}
                 >
                   {item.text}
                 </Box>
               )}
-              <Box className={styles.cardBox}
-              >
-                {item.count}
-              </Box>
+              <Box className={styles.cardBox}>{item.count}</Box>
             </Box>
             <Divider />
           </Box>

@@ -6,7 +6,6 @@ const initialState: StoreMain = {
   workStatusData: [],
   isLoadingWorkStatus: false,
   workStatusError: null,
-  
 };
 
 export const fetchMainData = createAsyncThunk(

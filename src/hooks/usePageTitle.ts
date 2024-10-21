@@ -6,10 +6,10 @@ import { AppDispatch } from "../store/Store";
 
 export function usePageTitle() {
   const location = useLocation();
-  const dispatch = useDispatch<AppDispatch>(); 
+  const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     const path = location.pathname;
-    let status  = null;
+    let status = null;
 
     if (path.startsWith("/pending-delivery")) {
       document.title = "ค้างส่ง - SIS";
@@ -21,9 +21,14 @@ export function usePageTitle() {
       document.title = "รอผลิต - SIS";
       status = "Wait";
     } else if (path.startsWith("/production-in-progress")) {
-      document.title = "อยู่ระหว่างการผลิต/เสร็จ - SIS";
+      document.title = "อยู่ระหว่างการผลิต - SIS";
+      status = "Inprogress";
+    } else if (path.startsWith("/completed-production")) {
+      document.title = "เสร็จ - SIS";
+      status = "Complete";
     } else if (path === "/cancelled-job-orders") {
       document.title = "รายการยกเลิกเลขที่ใบสั่งงาน - SIS";
+      status = "Cancel";
     } else if (path === "/delivery-schedule") {
       document.title = "ตารางจัดส่งตู้ - SIS";
     } else {

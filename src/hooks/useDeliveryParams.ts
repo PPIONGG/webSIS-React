@@ -8,5 +8,10 @@ export function useDeliveryParams() {
     address?: string;
   }>();
 
-  return { month, day, model, address };
+  return {
+    month: month ?? "All",
+    day: day ?? "All",
+    model: model ?? "All",
+    address: address ?? "All"
+  };
 }
